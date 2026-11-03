@@ -1,0 +1,57 @@
+# 构建产物
+firmware/
+tools/fw/phosphor_patch.bin
+tools/fw/phosphor_patch.elf
+tools/fw/phosphor_patch.sym
+tools/build/
+
+# 中间产物目录（其中的生成脚本与源素材单独放行，见下）
+!tools/build/tmp/gen_logo_mask.py
+!tools/build/tmp/gen_logo_wide.py
+!tools/build/tmp/svg_bbox.js
+!tools/build/tmp/svg_render.js
+!tools/build/tmp/package.json
+!tools/build/tmp/package-lock.json
+!tools/build/tmp/phosphor-mark.svg
+
+# 官方库（由 tools/build/at32lib/fetch.py 获取），fetch.py 本身需入库
+!tools/build/at32lib/fetch.py
+
+# 第三方文档与提取素材（版权归各自权利人）
+docs/reference/
+
+# 逆向工程中间产物（原厂固件派生的字符串 dump / Ghidra 工程）
+ghidra_proj/
+
+# 手写寄存器实现线的构建产物
+hand/build/*.bin
+hand/obj/
+hand/patch.bin
+hand/patch.elf
+hand/patch.sym
+
+# 上位机运行产物（含本机端口与标定数据）
+tools/host/calib_result.json
+tools/host/phosphor_layout.json
+tools/host/*.csv
+
+# Python
+__pycache__/
+*.pyc
+
+# Node
+node_modules/
+
+# 编辑器与系统
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+*.log
+.workbuddy/
+
+# 离线验证产物
+tools/test/*.wasm
+tools/test/stream.bin
+tools/test/canvas.bmp
