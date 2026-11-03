@@ -122,23 +122,12 @@ echo.
   %MINGW_FLAG% ^
   tools\host\phosphor_host.py
 
-if errorlevel 1 (
-  echo.
-  echo [失败] Nuitka 编译未通过，原因见上方日志。
-  echo        若是 Windows SDK 相关报错，请改用普通 CMD 窗口重跑，
-  echo        或执行:  tools\host\build_exe.bat mingw
-  popd
-  exit /b 1
-)
+if errorlevel 1 goto :build_fail
 
 set "ART=tools\build\host\PhosphorHost.exe"
 if /i "%MODE%"=="standalone" set "ART=tools\build\host\phosphor_host.dist\PhosphorHost.exe"
 
-if not exist "%ART%" (
-  echo [失败] 未找到产物: %ART%
-  popd
-  exit /b 1
-)
+if not exist "%ART%" goto :no_artifact
 
 echo.
 echo 产物    %ART%
@@ -149,3 +138,17 @@ echo.
 popd
 if /i not "%~1"=="--nopause" pause
 endlocal
+exit /b 0
+
+:build_fail
+echo.
+echo [失败] Nuitka 编译未通过，原因见上方日志。
+echo        若是 Windows SDK 相关报错，请改用普通 CMD 窗口重跑，
+echo        或执行:  tools\host\build_exe.bat mingw
+popd
+exit /b 1
+
+:no_artifact
+echo [失败] 未找到产物: %ART%
+popd
+exit /b 1
